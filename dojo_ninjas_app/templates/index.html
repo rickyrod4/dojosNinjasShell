@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojos & Ninjas Shell</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="dojo">
+            <h1>Add a Dojo</h1>
+            <form action="/createDojo" id="dojoForm" method="POST">
+                {% csrf_token %}
+                <label for="newDojo" name = "newDojo" id="newDojo">Name:</label>
+                <input type="text" placeholder="New Dojo Here">
+                <br>
+                <label for="city" name="city" id="city">City:</label>
+                <input type="text" placeholder="City Here">
+                <br>
+                <label for="state" name="state" id="state">State:</label>
+                <input type="text" placeholder="State Here">
+                <br>
+                <label for="desc" name="desc" id="desc">Description:</label>
+                <input type="text" name="desc" placeholder="Type Description Here">
+                <br>
+                <button id="add">Add</button>
+            </form>
+        </div>
+        <div id="ninja">
+            <h1>Add a Ninja</h1>
+            <form action="/createNinja" id="ninjaForm" method="POST">
+                {% csrf_token %}
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" placeholder="First Name Here">
+                <br>
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" placeholder="Last Name Here">
+                <br>
+                <label for="selectDojo">Dojo:</label>
+                <select name="selectDojo" id="selectDojo">
+                    {% for dojo in dojos%}
+                        <option value="{{ dojo.name }}">{{ dojo.name }}</option>
+                    {% endfor%}
+                </select>
+                <br>
+                <button id="add">Add</button>
+            </form>
+        </div>
+        <div id="footer">
+            <h1>All the Dojos</h1>
+            {% for dojo in dojos %}
+                <h3><span> Dojo: </span>{{ dojo.name }}</h3>
+                    <p><span>Location: </span>{{ dojo.city }}, {{ dojo.state }}</p>
+                    <p><span>Description: </span>{{ dojo.desc }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
